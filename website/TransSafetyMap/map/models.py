@@ -12,3 +12,7 @@ class Incident(models.Model):
     class Meta:
         managed = False
         db_table = 'incidents'
+        verbose_name_plural = 'Incidents'
+    
+    def __str__(self):
+        return f'{self.year} {self.severity} in {self.city}, {self.state}'
