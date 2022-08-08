@@ -13,5 +13,13 @@ In a separate terminal tab, you must run the data load script.
 
 If the load was sucessfull, you will see a message like this.
 
+    CREATE EXTENSION
     CREATE TABLE
     COPY 1024
+
+## Website Setup
+
+    python manage.py makemigrations
+    python manage.py migrate
+    python manage.py createsuperuser
+    python manage.py runserver

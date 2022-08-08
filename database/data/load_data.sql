@@ -1,5 +1,8 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 CREATE TABLE INCIDENTS
 (
+    ID uuid DEFAULT uuid_generate_v4 (),
     CITY VARCHAR,
     STATE CHAR(2),
     YEAR INT,
