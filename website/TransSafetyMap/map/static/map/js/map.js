@@ -10,4 +10,15 @@ window.onload= function(){
 	});
 
 	osm.addTo(map)
+
+	const data = JSON.parse(document.getElementById('incidents-data').textContent);
+	var markers = L.markerClusterGroup();
+	var geoJsonLayer = L.geoJson(data, {
+		onEachFeature: function (feature, layer) {
+			layer.bindPopup(feature.properties.year + ' ' + feature.properties.severity + ' in ' + feature.properties.city + ', ' + feature.properties.state);
+		}
+	});
+	markers.addLayer(geoJsonLayer);
+	map.addLayer(markers);
+	map.fitBounds(markers.getBounds(), { padding: [100, 100] })
 }
