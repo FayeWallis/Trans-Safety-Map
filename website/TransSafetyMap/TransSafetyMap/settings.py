@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.gis',
-    'map.apps.MapConfig'
+    'map.apps.MapConfig',
+    'leaflet',
 ]
 
 MIDDLEWARE = [
