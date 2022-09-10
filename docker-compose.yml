@@ -1,0 +1,48 @@
+version: '0.1'
+
+networks:
+  tsm:
+    driver: bridge
+
+services:
+  datbase:
+    image: postgis/postgis:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=foo
+      - POSTGRES_PASSWORD=bar
+      - POSTGRES_DB=TSMDEV
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./database/data/:/run/data
+    networks:
+      - tsm
+
+  migration:
+    build:
+      context: ./website
+      dockerfile: ./website/Dockerfile
+    command: python /run/code/manage.py migrate
+    volumes:
+      - ./website/TransSafetyMap:/run/code
+    links:
+      - database
+    depends_on:
+      - database
+    networks:
+      - tsm
+
+  website:
+    image: tsm_website
+    command: python /run/code/manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./website/TransSafetyMap:/run/code
+    links: 
+      - database
+    depends_on:
+      - migration
+    networks:
+      - tsm
